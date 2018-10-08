@@ -1,26 +1,20 @@
-#include <iostream>
+#include <rapidjson/document.h>
+#include <rapidjson/istreamwrapper.h>
 #include <fstream>
-#include <string>
+#include <iostream>
 
+using namespace rapidjson;
 using namespace std;
 
 int main()
 {
+  ifstream ifs("questions.json");
+  IStreamWrapper isw(ifs);
 
-  string qJson;
-  ifstream f("questions.json");
-  
-  if (f.is_open())
-  {
-    string line;
-    while(getline(f, line))
-    {
-      qJson += line;
-    }
-    f.close();
-  }
+  Document document;
+  document.parseStream(isw);
 
-  cout << qJson;
+  cout << document[0];
 
   return 0;
 }
